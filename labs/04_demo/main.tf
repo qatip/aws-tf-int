@@ -16,7 +16,6 @@ module "vpcs" {
   source    = "./modules/vpc"
   vpc_name  = each.value.name
   cidr_block = each.value.cidr_block
-  region    = each.value.region
   subnets   = [for k, v in var.subnets[each.key] : { name = k, cidr_block = v }]
 }
 
@@ -30,10 +29,9 @@ module "sgs" {
 resource "aws_vpc_peering_connection" "peer" {
   for_each = {
     peer1to2 = { local = "vpc1", remote = "vpc2" }
-    peer2to1 = { local = "vpc2", remote = "vpc1" }
   }
 
-  vpc_id      = module.vpcs[each.value.local].vpc_id
-  peer_vpc_id = module.vpcs[each.value.remote].vpc_id
+  vpc_id      = module.vpcs[each.value.local].vpc_details.id
+  peer_vpc_id = module.vpcs[each.value.remote].vpc_details.id
   auto_accept = true
 }

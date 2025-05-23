@@ -16,7 +16,6 @@ module "vpcs" {
   source    = "./modules/vpc"
   vpc_name  = each.value.name
   cidr_block = each.value.cidr_block
-  region    = each.value.region
   subnets   = [for k, v in var.subnets[each.key] : { name = k, cidr_block = v }]
 }
 
