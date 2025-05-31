@@ -4,7 +4,7 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::625339528876:user/awsstudent"
+        "AWS": "arn:aws:iam::<Account_ID>:user/awsstudent"
       },
       "Action": "sts:AssumeRole"
     }

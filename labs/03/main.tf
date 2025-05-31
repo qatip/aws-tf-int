@@ -9,9 +9,9 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  assume_role {
+#  assume_role {
 #    role_arn = "arn:aws:iam::<ACCOUNT_ID>:role/TerraformRole"
-  }
+#  }
 }
 
 resource "aws_s3_bucket" "terraform_state" {
