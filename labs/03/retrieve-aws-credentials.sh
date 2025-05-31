@@ -17,7 +17,7 @@ export AWS_ACCESS_KEY_ID=$ACCESS_KEY
 export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
 
 # Save to .env file
-echo "AWS_ACCESS_KEY_ID=$ACCESS_KEY" > $ENV_FILE
-echo "AWS_SECRET_ACCESS_KEY=$SECRET_KEY" >> $ENV_FILE
+echo "export AWS_ACCESS_KEY_ID=$ACCESS_KEY" > $ENV_FILE
+echo "export AWS_SECRET_ACCESS_KEY=$SECRET_KEY" >> $ENV_FILE
 
 echo "AWS credentials have been set for Terraform authentication and stored in $ENV_FILE."
