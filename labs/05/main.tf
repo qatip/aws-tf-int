@@ -1,49 +1,53 @@
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
+  profile = "testuser"
+
+#  assume_role {
+#    role_arn     = "arn:aws:iam::595582798190:role/TerraformLimitedAccessRole"
+#    session_name = "terraform-session"
+#  }
+}
+
+resource "aws_instance" "validated_ec2" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  lifecycle {
+    precondition {
+      condition     = startswith(var.instance_type, "t1") || startswith(var.instance_type, "t2")
+      error_message = "Only t1 or t2 instance types are allowed."
+    }
+  }
+
+  tags = {
+    Name = "ValidatedEC2"
+  }
+}
+
+locals {
+  actual_bucket_name = replace(var.bucket_name, "lab-bucket", "lab-bucket") # simulate a logic error
 }
 
 resource "aws_s3_bucket" "lab_bucket" {
-  bucket = var.s3_bucket_name
-
-  tags = {
-    Name        = var.s3_bucket_name
-    Environment = "Lab05"
-  }
-}
-
-resource "aws_iam_role" "lab_role" {
-  name = var.iam_role_name
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Action = "sts:AssumeRole",
-      Effect = "Allow",
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      }
-    }]
-  })
-
+  bucket = local.actual_bucket_name
+  
+  
   lifecycle {
-    postcondition {
-      condition     = self.name == var.iam_role_name
-      error_message = "IAM Role name does not match the expected value."
-    }
+  precondition {
+    condition     = can(regex("lab-bucket", var.bucket_name))
+    error_message = "Bucket name must include 'lab-bucket'."
+  }
+
+  postcondition {
+    condition     = can(regex("lab-bucket", self.bucket))
+    error_message = "The actual bucket name must contain 'lab-bucket'."
   }
 }
-
-resource "aws_instance" "lab_instance" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.lab_profile.name
-
   tags = {
-    Name = "Lab05-Instance"
+    Purpose = "Terraform Validation Lab"
   }
 }
 
-resource "aws_iam_instance_profile" "lab_profile" {
-  name = "Lab05InstanceProfile"
-  role = aws_iam_role.lab_role.name
+output "bucket_name" {
+  value = aws_s3_bucket.lab_bucket.bucket
 }
