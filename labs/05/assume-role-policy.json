@@ -3,6 +3,6 @@
   "Statement": [{
     "Effect": "Allow",
     "Action": "sts:AssumeRole",
-    "Resource": "arn:aws:iam::595582798190:role/TerraformLimitedAccessRole"
+    "Resource": "arn:aws:iam::<Account_ID>:role/TerraformLimitedAccessRole"
   }]
 }

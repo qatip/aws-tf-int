@@ -3,7 +3,7 @@ provider "aws" {
   profile = "testuser"
 
 #  assume_role {
-#    role_arn     = "arn:aws:iam::595582798190:role/TerraformLimitedAccessRole"
+#    role_arn     = "arn:aws:iam::<Account_ID>:role/TerraformLimitedAccessRole"
 #    session_name = "terraform-session"
 #  }
 }
