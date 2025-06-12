@@ -1,11 +1,11 @@
 provider "aws" {
   region  = "us-east-1"
-  profile = "testuser"
 
-#  assume_role {
-#    role_arn     = "arn:aws:iam::<Account_ID>:role/TerraformLimitedAccessRole"
-#    session_name = "terraform-session"
-#  }
+
+  assume_role {
+    role_arn     = "arn:aws:iam::<Account_ID>:role/TerraformLimitedAccessRole"
+    session_name = "terraform-session"
+  }
 }
 
 resource "aws_instance" "validated_ec2" {
@@ -14,8 +14,8 @@ resource "aws_instance" "validated_ec2" {
 
   lifecycle {
     precondition {
-      condition     = startswith(var.instance_type, "t1") || startswith(var.instance_type, "t2")
-      error_message = "Only t1 or t2 instance types are allowed."
+      condition     = startswith(var.instance_type, "t2")
+      error_message = "Only t2 instance types are allowed."
     }
   }
 
@@ -25,7 +25,7 @@ resource "aws_instance" "validated_ec2" {
 }
 
 locals {
-  actual_bucket_name = replace(var.bucket_name, "lab-bucket", "lab-bucket") # simulate a logic error
+  actual_bucket_name = replace(var.bucket_name, "lab-bucket", "lab-bucket") # simulate a logic error replacing the bucket name as defined by variable.
 }
 
 resource "aws_s3_bucket" "lab_bucket" {
@@ -40,6 +40,7 @@ resource "aws_s3_bucket" "lab_bucket" {
 
   postcondition {
     condition     = can(regex("lab-bucket", self.bucket))
+    # self.bucket is the actual value of the bucket argument after Terraform evaluates the resource
     error_message = "The actual bucket name must contain 'lab-bucket'."
   }
 }
