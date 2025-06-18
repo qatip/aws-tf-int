@@ -1,4 +1,4 @@
-s3_bucket_name  = "lab05-checks-demo"
-iam_role_name   = "Lab05Role"
-instance_type   = "t3.micro"
-ami_id          = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 in us-east-1
+ami_id        = "ami-02457590d33d576c3"
+instance_type = "t2.small"
+bucket_name   = "lab-bucket-qatip-<6 digits>"
+
