@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "eu-west-2"
 }
 terraform {
   backend "s3" {
     bucket         = "{your state bucket}"   
     key            = "terraform.tfstate"
-    region         = "us-west-2"
+    region         = "eu-west-2"
     encrypt        = true
   }
 }
