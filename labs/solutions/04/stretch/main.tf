@@ -1,47 +1,39 @@
 provider "aws" {
+  alias  = "east"
   region = "us-east-1"
-  alias  = "useast"
 }
 
 provider "aws" {
+  alias  = "west"
   region = "us-west-2"
-  alias  = "uswest"
+}
+
+data "aws_availability_zones" "east" {
+  provider = aws.east
+  state    = "available"
+}
+
+data "aws_availability_zones" "west" {
+  provider = aws.west
+  state    = "available"
 }
 
 module "vpc_east" {
-  source     = "./modules/vpc"
-  providers  = {
-    aws = aws.useast
-  }
-  vpc_name   = "vpc-east"
-  cidr_block = "10.0.0.0/16"
+  source            = "./modules/vpc"
+  providers         = { aws = aws.east }
+  vpc_name          = "vpc-east"
+  vpc_cidr          = var.vpc_east_cidr
+  subnet_name       = "subnet-east"
+  subnet_cidr       = var.subnet_east_cidr
+  availability_zone = data.aws_availability_zones.east.names[0]
 }
 
 module "vpc_west" {
-  source     = "./modules/vpc"
-  providers  = {
-    aws = aws.uswest
-  }
-  vpc_name   = "vpc-west"
-  cidr_block = "10.1.0.0/16"
-}
-
-resource "aws_subnet" "subnet_east" {
-  provider   = aws.useast
-  vpc_id     = module.vpc_east.vpc_id
-  cidr_block = "10.0.1.0/24"
-
-  tags = {
-    Name = "subnet-east"
-  }
-}
-
-resource "aws_subnet" "subnet_west" {
-  provider   = aws.uswest
-  vpc_id     = module.vpc_west.vpc_id
-  cidr_block = "10.1.1.0/24"
-
-  tags = {
-    Name = "subnet-west"
-  }
+  source            = "./modules/vpc"
+  providers         = { aws = aws.west }
+  vpc_name          = "vpc-west"
+  vpc_cidr          = var.vpc_west_cidr
+  subnet_name       = "subnet-west"
+  subnet_cidr       = var.subnet_west_cidr
+  availability_zone = data.aws_availability_zones.west.names[0]
 }
