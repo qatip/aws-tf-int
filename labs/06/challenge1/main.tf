@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "example" {
   lifecycle {
     precondition {
       condition     = 
-      error_message = "S3 bucket name must be bucket1 to bucket2."
+      error_message = "S3 bucket name must contain "bucket1" through to "bucket2""
     }
     precondition {
       condition     = 

@@ -2,10 +2,10 @@ provider "aws" {
   region  = "us-east-1"
 
 
-  assume_role {
-    role_arn     = "arn:aws:iam::511201119867:role/TerraformLimitedAccessRole"
-    session_name = "terraform-session"
-  }
+#  assume_role {
+#    role_arn     = "arn:aws:iam::<account_id>:role/TerraformLimitedAccessRole"
+#    session_name = "terraform-session"
+#  }
 }
 
 resource "aws_instance" "validated_ec2" {
