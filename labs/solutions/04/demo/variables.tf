@@ -2,11 +2,10 @@ variable "vpcs" {
   type = map(object({
     name       = string
     cidr_block = string
-    region     = string
   }))
   default = {
-    vpc1 = { name = "vpc-01", cidr_block = "10.0.0.0/16"}
-    vpc2 = { name = "vpc-02", cidr_block = "10.1.0.0/16"}
+    vpc1 = { name = "vpc-01", cidr_block = "10.0.0.0/16" }
+    vpc2 = { name = "vpc-02", cidr_block = "10.1.0.0/16" }
   }
 }
 

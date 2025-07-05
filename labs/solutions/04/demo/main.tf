@@ -19,20 +19,20 @@ module "vpcs" {
   subnets   = [for k, v in var.subnets[each.key] : { name = k, cidr_block = v }]
 }
 
-#module "sgs" {
-#  for_each = { for k, v in module.vpcs : k => v.vpc_details }
-#  source   = "./modules/sg"
-#  sg_name  = "${each.value.name}-sg"
-#  vpc_id   = each.value.id
-#}
+module "sgs" {
+  for_each = { for k, v in module.vpcs : k => v.vpc_details }
+  source   = "./modules/sg"
+  sg_name  = "${each.value.name}-sg"
+  vpc_id   = each.value.id
+}
 
-#resource "aws_vpc_peering_connection" "peer" {
-#  for_each = {
-#    peer1to2 = { local = "vpc1", remote = "vpc2" }
-#    peer2to1 = { local = "vpc2", remote = "vpc1" }
-#  }
+resource "aws_vpc_peering_connection" "peer" {
+  vpc_id      = module.vpcs["vpc1"].vpc_details.id
+  peer_vpc_id = module.vpcs["vpc2"].vpc_details.id
+  auto_accept = true
 
-#  vpc_id      = module.vpcs[each.value.local].vpc_id
-#  peer_vpc_id = module.vpcs[each.value.remote].vpc_id
-#  auto_accept = true
-#}
+  tags = {
+    Name = "peer-vpc1-vpc2"
+  }
+}
+

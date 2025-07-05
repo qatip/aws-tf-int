@@ -27,11 +27,12 @@ module "sgs" {
 }
 
 resource "aws_vpc_peering_connection" "peer" {
-  for_each = {
-    peer1to2 = { local = "vpc1", remote = "vpc2" }
-  }
-
-  vpc_id      = module.vpcs[each.value.local].vpc_details.id
-  peer_vpc_id = module.vpcs[each.value.remote].vpc_details.id
+  vpc_id      = module.vpcs["vpc1"].vpc_details.id
+  peer_vpc_id = module.vpcs["vpc2"].vpc_details.id
   auto_accept = true
+
+  tags = {
+    Name = "peer-vpc1-vpc2"
+  }
 }
+
