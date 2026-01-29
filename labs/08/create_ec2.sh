@@ -68,20 +68,16 @@ USER_DATA=$(cat <<-END
 #!/usr/bin/env bash
 set -e
 
-# Base system
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get install -y fontconfig openjdk-21-jre curl gnupg lsb-release unzip
 
-# Jenkins key (official 2026 key)
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key | sudo tee /etc/apt/keyrings/jenkins-keyring.asc > /dev/null
-
-# Jenkins repo
 echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 
-# Install Jenkins
 sudo apt-get update -y
+echo "Installing Jenkins version $JENKINS_VERSION..."
 sudo apt install -y jenkins=$JENKINS_VERSION
 sudo apt-mark hold jenkins  # Prevent automatic updates
 
