@@ -4,9 +4,17 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::<account>:user/testuser"
+        "AWS": "*"
       },
-      "Action": "sts:AssumeRole"
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "ArnLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:user/student",
+            "arn:aws:iam::*:user/John"
+          ]
+        }
+      }
     }
   ]
 }
