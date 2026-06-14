@@ -87,30 +87,56 @@ echo "Completed: Key Pair $KEY_NAME created and saved as ${KEY_NAME}.pem"
 
 # Step 7: Launch EC2 Instance with User Data
 echo "Starting: Launching EC2 Instance..."
-JENKINS_VERSION="2.479.3"
+JENKINS_VERSION="2.555.3"
+
 
 USER_DATA=$(cat <<END
 #!/bin/bash
 set -e
 
-sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y openjdk-17-jdk unzip curl gnupg lsb-release
+apt-get update -y
 
-curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt update -y
-sudo apt install -y jenkins=$JENKINS_VERSION
-sudo apt-mark hold jenkins
+apt-get install -y \
+    fontconfig \
+    openjdk-21-jre \
+    curl \
+    gnupg \
+    unzip \
+    git
 
-sudo systemctl enable --now jenkins
-sudo systemctl restart jenkins
+mkdir -p /etc/apt/keyrings
 
-sudo bash -c 'echo "jenkins ALL=(ALL) NOPASSWD: /usr/bin/mv, /usr/bin/unzip" > /etc/sudoers.d/jenkins'
-sudo chmod 440 /etc/sudoers.d/jenkins
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key \
+    | tee /etc/apt/keyrings/jenkins-keyring.asc > /dev/null
 
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword > /home/ubuntu/jenkins_admin_password.txt || true
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" \
+    > /etc/apt/sources.list.d/jenkins.list
+
+apt-get update -y
+
+apt-get install -y jenkins=${JENKINS_VERSION}
+
+apt-mark hold jenkins
+
+systemctl enable jenkins
+systemctl start jenkins
+
+echo "jenkins ALL=(ALL) NOPASSWD: /usr/bin/mv, /usr/bin/unzip" \
+    > /etc/sudoers.d/jenkins
+
+chmod 440 /etc/sudoers.d/jenkins
+
+until [ -f /var/lib/jenkins/secrets/initialAdminPassword ]; do
+    sleep 10
+done
+
+cat /var/lib/jenkins/secrets/initialAdminPassword \
+    > /home/ubuntu/jenkins_admin_password.txt
+
+chown ubuntu:ubuntu /home/ubuntu/jenkins_admin_password.txt
 END
 )
+
 
 INSTANCE_ID=$(aws ec2 run-instances \
   --image-id "$AMI_ID" \
