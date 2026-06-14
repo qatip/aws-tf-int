@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_s3_bucket" "media_bucket" {
-  bucket = "qatip-demo-static-mcg-001"  # Change to your unique bucket name
+  bucket = "qatip-demo-static-{suffix}"  # Change to your unique bucket name
   force_destroy = true
 }
 
