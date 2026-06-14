@@ -74,9 +74,10 @@ resource "aws_s3_object" "uploaded_files" {
 }
 
 # Optional: Data block for pre-sign URL generation (referenced for command)
-data "aws_s3_object" "Teide" {
+data "aws_s3_object" "teide" {
   bucket = aws_s3_bucket.media_bucket.id
   key    = "Teide.jpeg"
+  region = "us-east-1"
 }
 
 output "pre_signed_url_command_to_run" {
