@@ -83,3 +83,4 @@ data "aws_s3_object" "teide" {
 output "pre_signed_url_command_to_run" {
   value     = "aws s3 presign s3://${aws_s3_bucket.media_bucket.id}/Teide.jpeg --expires-in 3600"
 }
+
