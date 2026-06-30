@@ -19,23 +19,13 @@
       }
     },
     "docker_container": {
-      "web_server": {
+      "webserver": {
         "image": "${docker_image.apache_web.image_id}",
-        "name": "web_server",
+        "name": "webserver",
         "ports": [
           {
             "internal": 80,
             "external": 88
-          }
-        ]
-      },
-      "webserver_2": {
-        "name": "webserver_2",
-        "image": "${docker_image.apache_web.image_id}",
-        "ports": [
-          {
-            "internal": 80,
-            "external": 89
           }
         ]
       }

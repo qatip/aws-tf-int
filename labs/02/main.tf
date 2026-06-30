@@ -17,9 +17,9 @@ resource "docker_image" "apache_web" {
 }
 
 # Create a container
-resource "docker_container" "web_server" {
+resource "docker_container" "webserver" {
   image = docker_image.apache_web.image_id
-  name  = "web_server"
+  name  = "webserver"
   ports {
     internal = 80
     external = 88
