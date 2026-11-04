@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     docker = {
-      source = "kreuzwerker/docker"
+      source  = "kreuzwerker/docker"
       version = "4.2.0"
     }
   }
@@ -9,12 +9,12 @@ terraform {
 
 provider "docker" {
   host = "tcp://localhost:2375"
-#  host = "unix:///var/run/docker.sock"
+  #  host = "unix:///var/run/docker.sock"
 }
 
 # Pulls the image
 resource "docker_image" "apache_web" {
-  name  = "httpd:latest"
+  name = "httpd:latest"
 }
 
 # Create a container
@@ -23,6 +23,6 @@ resource "docker_container" "web_server" {
   name  = "web_server"
   ports {
     internal = 80
-    external = 88
+    external = 8800
   }
 }
