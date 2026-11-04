@@ -8,7 +8,8 @@ terraform {
 }
 
 provider "docker" {
-  host = "unix:///var/run/docker.sock"
+  host = "tcp://localhost:2375"
+#  host = "unix:///var/run/docker.sock"
 }
 
 # Pulls the image
