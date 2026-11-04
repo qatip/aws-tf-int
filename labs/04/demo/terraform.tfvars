@@ -2,13 +2,13 @@ vpcs = {
   vpc1 = {
     name          = "vpc-01"
     cidr_block    = "10.1.0.0/16"
-    location      = "East US"
+    location      = "us-west-2"
   }
 
   vpc2 = {
     name          = "vpc-02"
     cidr_block = "10.2.0.0/16"
-    location      = "West Europe"
+    location      = "us-west-2"
   }
 }
 
