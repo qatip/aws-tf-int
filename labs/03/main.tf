@@ -10,12 +10,13 @@ terraform {
 provider "aws" {
   region = "us-west-2"
 #  assume_role {
-#    role_arn = "arn:aws:iam::<ACCOUNT_ID>:role/TerraformRole"
+#    role_arn = "arn:aws:iam::{change-me}:role/TerraformRole"
+#    session_name = "qatipint-lab03"
 #  }
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "<unique_bucket_name>"
+  bucket = "{change-me}"
 }
 
 output "bucket_name" {
