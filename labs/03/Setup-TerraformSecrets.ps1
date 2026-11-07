@@ -1,6 +1,6 @@
 #requires -Version 7.4
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$Profile,[string]$Region = 'us-east-1')
+param([Parameter(Mandatory)][string]$Profile,[string]$Region = 'us-west-2')
 . (Join-Path $PSScriptRoot 'Lab03.Common.ps1')
 Get-Command aws -ErrorAction Stop | Out-Null
 $recordPath = Join-Path $PSScriptRoot 'lab03-vscode-resources.json'
