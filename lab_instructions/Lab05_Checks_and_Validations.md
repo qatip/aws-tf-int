@@ -42,6 +42,7 @@ This lab introduces Terraform validation mechanisms (preconditions and postcondi
 2. Run:
 
    ```powershell
+   terraform init
    terraform plan
    ```
 
