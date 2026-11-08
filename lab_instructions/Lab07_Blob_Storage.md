@@ -6,8 +6,6 @@
 
 In this lab, you will create a private Amazon S3 bucket, upload local files with the correct content types, configure a lifecycle policy and share one object using a temporary pre-signed URL. Terraform runs locally in the VS Code PowerShell terminal. All resources use **us-west-2 Oregon**.
 
-The lab follows the Azure guide's structure with **Try it yourself**, **Step-by-Step**, code explanations and verification. S3 stores objects directly in a bucket; there is no separate resource group, storage account or container to create. A pre-signed S3 GET URL for one object replaces the Azure container SAS exercise.
-
 ## Contents
 
 - [Lab Objectives](#lab-objectives)
@@ -44,9 +42,8 @@ Terraform manages the infrastructure and uploads. The AWS CLI signs the temporar
 ## Before you begin
 
 1. Complete Lab 0. Use the same lab account and authentication method for Terraform and the AWS CLI. You need VS Code, Terraform 1.10 or later and below 2.0, AWS CLI v2 and PowerShell 7.4 or later.
-2. Extract the test pack to a temporary folder. Copy the contents of `aws-tf-int\labs\07` into `C:\aws-tf-int\labs\07`. Back up existing files before replacing them. The completed solution is separate, under `aws-tf-int\labs\solutions\07`.
-3. In VS Code choose **File > Open Folder**, open `C:\aws-tf-int\labs\07`, and open a PowerShell 7 terminal.
-4. Run these commands, one line at a time:
+2. In VS Code choose **File > Open Folder**, open `C:\aws-tf-int\labs\07`, and open a terminal.
+3. Run these commands, one line at a time:
 
 ```powershell
 Set-Location C:\aws-tf-int\labs\07
@@ -59,7 +56,7 @@ aws sts get-caller-identity --region us-west-2
 Check that the account and identity match the lab portal. If using a named profile, select it **before** the identity check and Terraform commands, for example:
 
 ```powershell
-$env:AWS_PROFILE = "training"
+$env:AWS_PROFILE = "default"
 ```
 
 Use the lab's credentials; do not place keys in `main.tf`. Temporary credentials must include their session token. Your identity needs permission to manage the lab bucket, its configuration, objects and versions. Ask the instructor about specific permission denials.
@@ -68,11 +65,10 @@ Use the lab's credentials; do not place keys in `main.tf`. Temporary credentials
 | --- | --- |
 | `main.tf` | Task sections and commented upload code for Task 3 |
 | `mime.json` | Supplied extension-to-MIME map |
-| `.terraform.lock.hcl` | AWS provider 6.72.0 selection and Windows/Linux checksums |
 | `static_files\Teide.jpeg` | JPEG image to upload and share |
 | `static_files\laptop.png` | PNG image to upload |
 | `static_files\ipsum.txt` | Text file to upload |
-| `.gitignore` | Excludes Terraform working data and state from Git |
+
 
 Run all commands from `C:\aws-tf-int\labs\07`. Use the AWS Console to verify results; change resources through Terraform. This lab uses local state. Keep state until cleanup is complete and do not commit it to Git.
 
