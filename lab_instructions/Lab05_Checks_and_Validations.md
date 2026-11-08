@@ -119,7 +119,7 @@ Preconditions catch bad input early; postconditions ensure that no unexpected tr
 15. Clean up with:
 
     ```powershell
-    terraform destroy
+    terraform destroy --auto-approve
     ```
 
 ## What You Demonstrated
