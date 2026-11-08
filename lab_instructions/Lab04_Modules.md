@@ -162,6 +162,7 @@
     cd c:\aws-tf-int\labs\04
     terraform init
     terraform plan
+    terraform apply --auto-approve
     ```
 
 ### Verify the Deployment
