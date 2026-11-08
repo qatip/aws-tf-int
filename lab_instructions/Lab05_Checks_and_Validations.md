@@ -38,7 +38,7 @@ This lab introduces Terraform validation mechanisms (preconditions and postcondi
 
 ### Steps
 
-1. Update `terraform.tfvars` to attempt to provision an EC2 instance of type `m5.large`.
+1. Update `terraform.tfvars` to attempt to provision an EC2 instance of type `m5.large`. 
 2. Run:
 
    ```powershell
