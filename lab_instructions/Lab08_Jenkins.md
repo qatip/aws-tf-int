@@ -56,35 +56,13 @@ All AWS resources in this lab use `us-west-2`. Do not upload real data to the te
 
 1. In VS Code choose **File > Open Folder**, select `C:\aws-tf-int\labs\06`, and trust the folder after reviewing its contents.
 
-2. Open **Terminal > Select Default Profile**, select **PowerShell** for PowerShell 7, then open a new terminal. Check the version; Windows PowerShell 5.1 cannot run these scripts.
-
-   ```powershell
-   $PSVersionTable.PSVersion
-   ```
-
-   If the result is below 7.4, install PowerShell 7 using the following command in your existing terminal. Reopen VS Code afterwards and select the new PowerShell profile. If `winget` is unavailable, ask the instructor to install PowerShell from Microsoft's official download page.
-
-   ```powershell
-   winget install --id Microsoft.PowerShell --exact --source winget
-   ```
-
-   For an existing PowerShell 7 installation, use:
-
-   ```powershell
-   winget upgrade --id Microsoft.PowerShell --exact --source winget
-   ```
-
-   Reopening VS Code is sufficient for a normal side by side installation; this lab does not require a planned Windows reboot.
-
-3. Run these commands in the new PowerShell terminal, one line at a time.
+3. Run these commands in a vsc terminal, one line at a time.
 
    ```powershell
    Set-Location C:\aws-tf-int\labs\06
    Get-ChildItem -Recurse -Filter *.ps1 | Unblock-File
    Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
-   aws --version
-   ssh -V
-   ```
+      ```
 
    The execution policy change applies only to this terminal and does not override an organisation's Group Policy. If `aws` or `ssh` is missing, install the approved AWS CLI v2 or Windows OpenSSH client before proceeding. Reopen the terminal after changing PATH.
 
