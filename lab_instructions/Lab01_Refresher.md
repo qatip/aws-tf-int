@@ -113,7 +113,7 @@ This is the second block of code that indicates the resources we want Terraform 
 
 4. If prompted, Windows Defender should be configured to allow access.
 5. Switch to Docker Desktop and verify the image download and container creation.
-6. Switch back to the IDE terminal and run: 
+6. Switch back to the IDE terminal and run:
 
    ```powershell
    docker images
