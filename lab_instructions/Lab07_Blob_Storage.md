@@ -348,7 +348,7 @@ The explicit dependencies order versioning and encryption before uploads. They d
 
 ### Apply and verify
 
-3. Once that interval has passed, save and run:
+3. Run:
 
 ```powershell
 terraform fmt
@@ -473,10 +473,10 @@ output "object_https_url" {
 terraform fmt
 terraform validate
 terraform plan
-terraform apply
+terraform apply --auto-approve
 ```
 
-The plan should add outputs without changing infrastructure. Enter `yes` if prompted.
+The plan should add outputs without changing infrastructure.
 
 3. Capture the S3 URI:
 
@@ -557,10 +557,8 @@ terraform plan -destroy
 2. Confirm the plan targets only the lab bucket, its configuration and objects. Run:
 
 ```powershell
-terraform destroy
+terraform destroy --auto-approve
 ```
-
-Review and enter `yes`.
 
 The bucket's `force_destroy = true` setting permits deletion of remaining versions and delete markers. Deleting only visible current objects would not empty a versioned bucket.
 
