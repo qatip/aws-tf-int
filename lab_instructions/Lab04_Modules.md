@@ -2,7 +2,7 @@
 
 ## Terraform Modules
 
-**Version:** 2.0.1 | **Date:** 04/11/26 | **Author:** mcgreen@qa.com
+**Version:** 2.1.0 | **Date:** 12/11/26 | **Author:** mcgreen@qa.com
 
 ## Contents
 
