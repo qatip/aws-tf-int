@@ -1,6 +1,7 @@
 provider "aws" {
   region  = "us-west-2"
 
+# If changing the region, ensure the ami specified in tvars is updated accordingly
 
 #  assume_role {
 #    role_arn     = "arn:aws:iam::<account_id>:role/TerraformLimitedAccessRole"
