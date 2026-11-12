@@ -5,8 +5,6 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 
-
-
 module "vpc1" {
   source    = "./modules/vpc"
   vpc_name  = "vpc-01"

@@ -180,7 +180,7 @@
 ## Demo Lab
 
 19. This demonstration walks you through a more complex use of modules to deploy VPCs (Virtual Private Clouds) with subnets, Security Groups (SGs), and VPC Peering. The goal is to further highlight the benefits of dynamic and reusable infrastructure by leveraging Terraform modules and outputs.
-20. In your IDE, navigate to `/labs/04/demo` and review the provisioned files.
+20. In your IDE, navigate to `/labs/04demo` and review the provisioned files.
 
 ### Lab Logic
 
@@ -232,7 +232,7 @@
 30. Run the following commands:
 
     ```powershell
-    cd c:\aws-tf-int\labs\04\demo
+    cd c:\aws-tf-int\labs\04demo
     terraform init
     terraform plan
     terraform apply --auto-approve
